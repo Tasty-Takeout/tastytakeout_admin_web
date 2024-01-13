@@ -1,20 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+// import 'package:get_storage/get_storage.dart';
+// import 'controllers/login_controller.dart';
+import 'views/screens/dashboard_screen.dart';
+import 'views/screens/login_screen.dart';
 
-void main() {
-  runApp(const MainApp());
+void main() async {
+  // await GetStorage.init();
+  runApp(MyApp());
 }
 
-class MainApp extends StatelessWidget {
-  const MainApp({super.key});
-
+class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: Scaffold(
-        body: Center(
-          child: Text('Hello World!'),
-        ),
-      ),
+    return GetMaterialApp(
+      title: 'GetX Dashboard',
+      initialRoute: '/login',
+      getPages: [
+        GetPage(name: '/login', page: () => LoginPage(), binding: LoginBinding()),
+        GetPage(name: '/dashboard', page: () => DashboardPage(), binding: DashboardBinding()),
+      ],
     );
+  }
+}
+
+class LoginBinding extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut(() => LoginController());
+  }
+}
+
+class DashboardBinding extends Bindings {
+  @override
+  void dependencies() {
+    Get.lazyPut(() => DashboardController());
   }
 }

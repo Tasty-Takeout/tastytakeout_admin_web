@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:easy_sidemenu/easy_sidemenu.dart';
+import 'package:tastytakeout_admin_web/views/screens/event_creator_screen.dart';
 import 'package:tastytakeout_admin_web/views/screens/voucher_creator_screen.dart';
 
 // class MyHomePage extends StatefulWidget {
@@ -40,6 +41,7 @@ class DashboardPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         // title: Text(widget.title),
+        leading: null,
         title: Text("Tasty Takeout Admin"),
         centerTitle: true,
       ),
@@ -119,7 +121,7 @@ class DashboardPage extends StatelessWidget {
                 onTap: (index, _) {
                   dashboardController.sideMenu.changePage(index);
                 },
-                icon: const Icon(Icons.file_copy_rounded),
+                icon: const Icon(Icons.label_important),
                 // trailing: Container(
                 //     decoration: const BoxDecoration(
                 //         color: Colors.amber,
@@ -132,6 +134,13 @@ class DashboardPage extends StatelessWidget {
                 //         style: TextStyle(fontSize: 11, color: Colors.grey[800]),
                 //       ),
                 //     )),
+              ),
+              SideMenuItem(
+                title: 'Phát hành event mới',
+                onTap: (index, _) {
+                  dashboardController.sideMenu.changePage(index);
+                },
+                icon: const Icon(Icons.event),
               ),
               // SideMenuItem(
               //   title: 'Download',
@@ -199,6 +208,16 @@ class DashboardPage extends StatelessWidget {
                 Container(
                   color: Colors.white,
                   child: VoucherCreatorScreen(),
+                  // child: const Center(
+                  //   child: Text(
+                  //     'Files',
+                  //     style: TextStyle(fontSize: 35),
+                  //   ),
+                  // ),
+                ),
+                Container(
+                  color: Colors.white,
+                  child: EventCreatorScreen(),
                   // child: const Center(
                   //   child: Text(
                   //     'Files',

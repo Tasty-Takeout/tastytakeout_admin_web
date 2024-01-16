@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1070733316751",
+    "project_id": "tastytakeoutimagestoreage",
+    "storage_bucket": "tastytakeoutimagestoreage.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1070733316751:android:61e49f47517d9ee737d6fa",
+        "android_client_info": {
+          "package_name": "com.example.tastytakeout_admin_web"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAVIsP1dGKPNK2aogFJkovz6eBmosmX6EU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

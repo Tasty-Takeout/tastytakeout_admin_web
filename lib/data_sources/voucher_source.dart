@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:tastytakeout_admin_web/globals.dart';
 import 'package:http/http.dart' as http;
 import 'package:tastytakeout_admin_web/models/dto/voucher_model.dart';
@@ -8,7 +10,6 @@ class VoucherSource {
   Future<bool> createNewVoucher(VoucherModel voucher) async {
     try {
       final uri = Uri.parse('$baseUrl');
-      // final response = await http.get(uri);
       final response = await http.post(
         uri,
         headers: {
@@ -24,22 +25,42 @@ class VoucherSource {
           'max_price': voucher.maxPrice.toString(),
           'min_price': voucher.minPrice.toString(),
         },
-
       );
 
       if (response.statusCode == 200) {
-        // If the server did return a 200 OK response,
         return Future<bool>.value(true);
       } else {
-        // Error handling for unsuccessful requests
         print('Request failed with status: ${response.statusCode}');
         print(response.body);
         return Future<bool>.value(false);
       }
     } catch (e) {
-      // Exception handling
       print('Exception during request: $e');
       return Future<bool>.value(false);
+    }
+  }
+
+  Future<List<VoucherModel>> getAllVouchers() async {
+    try {
+      final uri = Uri.parse('$baseUrl');
+      final response = await http.get(uri);
+
+      if (response.statusCode == 200) {
+        var jsonString = utf8.decode(response.bodyBytes);
+        final List<dynamic> data = jsonDecode(jsonString);
+
+        final List<VoucherModel> vouchers = data
+            .map((voucher) => VoucherModel.fromJson(voucher))
+            .toList();
+        return vouchers;
+      } else {
+        print('Request failed with status: ${response.statusCode}');
+        print(response.body);
+        return [];
+      }
+    } catch (e) {
+      print('Exception during request: $e');
+      return [];
     }
   }
 }

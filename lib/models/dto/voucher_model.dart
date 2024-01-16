@@ -18,4 +18,18 @@ class VoucherModel {
     required this.maxPrice,
     required this.minPrice,
   });
+
+  static VoucherModel fromJson(Map<String, dynamic> voucher) {
+    return VoucherModel(
+      code: voucher['code'],
+      name: voucher['name'],
+      description: voucher['description'],
+      endDate: voucher['end'],
+      discountAmount: voucher['discount_amount'].toDouble(),
+      discountType: voucher['discount_type'],
+      maxPrice: voucher['max_price'].toDouble(),
+      minPrice: voucher['min_price'].toDouble(),
+    );
+  }
+
 }

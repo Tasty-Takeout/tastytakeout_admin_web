@@ -13,6 +13,10 @@ dependencies:
   easy_sidemenu: ^0.5.0
   http: ^1.1.2
   image_picker: ^1.0.7
+  uploadcare_client: ^7.0.0
+  file_picker: ^6.1.1
+  firebase_storage: ^11.6.0
+
 
 dev_dependencies:
   flutter_test:

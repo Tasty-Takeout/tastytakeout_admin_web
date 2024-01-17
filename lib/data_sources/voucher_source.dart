@@ -47,6 +47,7 @@ class VoucherSource {
 
       if (response.statusCode == 200) {
         var jsonString = utf8.decode(response.bodyBytes);
+        print(jsonString);
         final List<dynamic> data = jsonDecode(jsonString);
 
         final List<VoucherModel> vouchers = data

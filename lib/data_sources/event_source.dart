@@ -1,25 +1,50 @@
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 import 'package:tastytakeout_admin_web/globals.dart';
 import 'package:tastytakeout_admin_web/models/dto/event_model.dart';
 
 class EventSource {
   final baseUrl = Uri.http(serverIp, '/events/');
+  String token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxODg1OTUxNjI4LCJpYXQiOjE3MDQ1MTE2MjgsImp0aSI6IjU1MGFiOWU0MGM4MTQ2MDNhNmQxMjcxZjRiZjYxNmQ4IiwidXNlcl9pZCI6MTAsInJvbGUiOiJCVVlFUiJ9.Um--pPRWNG7VPh9F7ARYaRIn2Ab5yDvrpZvfsO9_9vA';
 
-  Future<bool> createNewEvent(EventModel voucher) async {
+  Future<bool> createNewEvent(EventModel event) async {
     try {
       final uri = Uri.parse('$baseUrl');
       // final response = await http.get(uri);
+
+      // convert event.vouchers to json maps that looks like 
+      // {
+      // "id": 0
+      // }
+      // {
+      // "id": 2
+      // }
+      final List<Map<String, dynamic>> voucherMaps = []; 
+      for (var voucherId in event.vouchers) {
+        voucherMaps.add({
+          'id': voucherId,
+        });
+      }
+      
+      String jsonString = jsonEncode(voucherMaps);
+      print(jsonString);
+
+      var body = jsonEncode({
+        "vouchers": voucherMaps,
+        'name': event.name,
+        'description': event.description,
+        'imageUrl': event.imageUrl,
+    });
+
       final response = await http.post(
         uri,
         headers: {
           'accept': 'application/json',
+          'Content-Type': 'application/json',
+          'Authorization' : 'Bearer ' + token
         },
-        body: {
-          'name': voucher.name,
-          'description': voucher.description,
-          'imageUrl': voucher.imageUrl,
-          // 'vouchers': voucher.vouchers.toString(),
-        },
+        body: body,
 
       );
 

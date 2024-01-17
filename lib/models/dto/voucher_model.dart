@@ -1,4 +1,5 @@
 class VoucherModel {
+  final String id;
   final String code;
   final String name;
   final String description;
@@ -9,6 +10,7 @@ class VoucherModel {
   final double minPrice;
 
   VoucherModel({
+    required this.id,
     required this.code,
     required this.name,
     required this.description,
@@ -21,6 +23,7 @@ class VoucherModel {
 
   static VoucherModel fromJson(Map<String, dynamic> voucher) {
     return VoucherModel(
+      id: voucher['id'].toString(),
       code: voucher['code'],
       name: voucher['name'],
       description: voucher['description'],

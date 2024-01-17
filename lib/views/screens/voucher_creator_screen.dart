@@ -21,6 +21,7 @@ class VoucherCreatorScreen extends StatelessWidget {
 
     void submitForm() {
       final VoucherModel voucher = VoucherModel(
+        id: "",
         code: codeController.text,
         name: nameController.text,
         description: descriptionController.text,

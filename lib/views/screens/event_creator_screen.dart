@@ -27,6 +27,17 @@ class _EventCreatorScreenState extends State<EventCreatorScreen> {
   }
 
   Future<void> submitForm() async {
+    if (selectedFileBytes == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Error: Please upload an image'),
+          duration: Duration(seconds: 2), // Set the duration here]
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
     final String eventName = eventNameController.text;
     final String eventDescription = eventDescriptionController.text;
     final String imageUrl = await controller.uploadImage(selectedFileBytes!);
@@ -39,21 +50,56 @@ class _EventCreatorScreenState extends State<EventCreatorScreen> {
       }
     }
 
+    if (eventName.isEmpty || eventDescription.isEmpty || imageUrl.isEmpty || voucherIds.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Error: Please fill in all fields'),
+          duration: Duration(seconds: 2), // Set the duration here
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
     final EventModel event = EventModel(
       name: eventName,
       description: eventDescription,
       imageUrl: imageUrl,
       vouchers: voucherIds,
     );
-
-
-
     print("???" + event.name + " " + event.description + " " + event.imageUrl);
     for (var voucherId in event.vouchers) {
       print(voucherId);
     }
 
-    controller.sendEvent(event);
+    bool finished = await controller.sendEvent(event);
+
+    if (finished) {
+      eventNameController.clear();
+      eventDescriptionController.clear();
+      eventImageController.clear();
+      for (int i = 0; i < controller.isSelected.length; i++) {
+        controller.isSelected[i] = false;
+      }
+      setState(() {
+        selectedFileBytes = null;
+      });
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Success: Event created successfully'),
+          duration: Duration(seconds: 2), // Set the duration here]
+          backgroundColor: const Color.fromARGB(255, 129, 223, 132),
+        ),
+      );
+    } else {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('Error: Event creation failed'),
+          duration: Duration(seconds: 2), // Set the duration here]
+          backgroundColor: const Color.fromARGB(255, 223, 132, 132),
+        ),
+      );
+    };
   }
 
   

@@ -48,8 +48,8 @@ class EventSource {
 
       );
 
-      if (response.statusCode == 200) {
-        // If the server did return a 200 OK response,
+      if (response.statusCode == 201) {
+        // If the server did return a 201 OK response,
         return Future<bool>.value(true);
       } else {
         // Error handling for unsuccessful requests

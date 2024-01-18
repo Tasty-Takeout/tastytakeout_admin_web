@@ -18,8 +18,8 @@ class EventCreatorViewModel extends GetxController {
   RxList<bool> isSelected = <bool>[].obs;
 
   // Add your controller logic here
-  void sendEvent(EventModel voucher) {
-    eventSource.createNewEvent(voucher);
+  Future<bool> sendEvent(EventModel voucher) {
+    return eventSource.createNewEvent(voucher);
   }
   Future<String> uploadImage(Uint8List selectedFileBytes) async {
     String stringUrl = await uploadCareSource.uploadFile(selectedFileBytes);
